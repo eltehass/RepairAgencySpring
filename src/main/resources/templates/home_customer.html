@@ -1,0 +1,104 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <style>
+        .row {
+            display: flex;
+        }
+
+        .column {
+            flex: 50%;
+        }
+        .topcorner{
+            position:absolute;
+            top:30px;
+            right:30px;
+        }
+    </style>
+</head>
+<body>
+<strong>CUSTOMER PAGE</strong><br>
+<strong>Welcome, dear <p th:text="${usrName + ' ' + usrSurname}"></p>
+</strong>
+<br>
+
+<div>You have access to next commands</div>
+<br><br>
+
+<form action="HomePage" method="post">
+    <input type="hidden" name="command" value="commentCommand"/>
+    <table style="height: 68px; width: 500px; border: 1px solid black;">
+        <tbody>
+        <tr>
+            <td style="width: 280px; text-align: center; border: 1px solid black;">
+                <strong>COMMENT</strong>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 280px; text-align: left;">Invoice ID:&nbsp; &nbsp;
+                <input name="customerInputInvoiceId" type="number" min="1" max="100" size="50" value="1"/>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 280px; text-align: left;">Comment:&nbsp; &nbsp;&nbsp;
+                <input name="customerInputComment" type="text" size="50"/>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 280px; text-align: center;">
+                <input type="submit" class="button" value="Submit"/>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+<form action="HomePage" method="post">
+    <input type="hidden" name="command" value="createCommand"/>
+    <table style="height: 68px; width: 500px; border: 1px solid black;">
+        <tbody>
+        <tr>
+            <td style="width: 280px; text-align: center; border: 1px solid black;">
+                <strong>CREATE</strong>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 280px; text-align: left;">Body:&nbsp; &nbsp;&nbsp;
+                <input name="customerInputBody" type="text" size="50"/>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 280px; text-align: center;">
+                <input type="submit" class="button" value="Submit"/>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+<form action="HomePage" method="post" class="topcorner">
+    <input type="hidden" name="command" value="logoutCommand"/>
+    <input type="submit" class="button" value="Log out"/>
+</form>
+
+<div class="row">
+    <div class="column">
+        <strong>Finished invoices</strong><br><br>
+        <th:block th:each="invoice : ${finished_invoices}">
+            <p th:text="${'Invoice ' + invoice.id + ', idApp = ' + invoice.idApplication + ', idMaster = ' + invoice.idMaster + ', price = ' + invoice.price}"></p>
+        </th:block>
+    </div>
+    <div class="column">
+        <strong>Rejected applications</strong><br><br>
+        <th:block th:each="app : ${rejected_applications}">
+            <p th:text="${'RegectedApp ' + app.id + ', appId = ' + app.idApplication + ', idManager = ' + app.idManager + ', message = ' + app.message}"></p>
+        </th:block>
+    </div>
+</div>
+
+<br><br><br>
+<p style="color:#FF0000"; th:text="${message}"></p>
+</body>
+</html>
